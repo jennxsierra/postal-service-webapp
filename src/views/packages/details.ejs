@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Package Details</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <%- include('../partials/header.ejs') %>
+    <h2>Package <%= package.trackingNumber %> Details</h2>
+    <p>
+      <strong>Sender:</strong> <%= package.senderName %> | <%=
+      package.senderAddress %>
+    </p>
+    <p>
+      <strong>Receiver:</strong> <%= package.receiverName %> | <%=
+      package.receiverAddress %>
+    </p>
+    <p><strong>Weight:</strong> <%= package.weight %></p>
+    <p><strong>Cost/Unit Weight:</strong> <%= package.costPerUnitWeight %></p>
+    <p><strong>Flat Fee:</strong> <%= package.flatFee %></p>
+    <p><strong>Shipping Method:</strong> <%= package.shippingMethod %></p>
+    <p><strong>Status:</strong> <%= package.status %></p>
+    <p><a href="/packages">Back to All Packages</a></p>
+    <%- include('../partials/footer.ejs') %>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>All Packages</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <%- include('../partials/header.ejs') %>
+    <h2>All Packages</h2>
+    <p><a href="/packages/new">Add a New Package</a></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Tracking #</th>
+          <th>Sender</th>
+          <th>Receiver</th>
+          <th>Weight</th>
+          <th>Method</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% packages.forEach(pkg => { %>
+        <tr>
+          <td>
+            <a href="/packages/<%= pkg.trackingNumber %>"
+              ><%= pkg.trackingNumber %></a
+            >
+          </td>
+          <td><%= pkg.senderName %></td>
+          <td><%= pkg.receiverName %></td>
+          <td><%= pkg.weight %></td>
+          <td><%= pkg.shippingMethod %></td>
+          <td><%= pkg.status %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <%- include('../partials/footer.ejs') %>
+  </body>
+</html>
