@@ -2,8 +2,7 @@
 import { ShippingMethod, PackageStatus } from "../enums";
 
 export abstract class Package {
-  // Protected so child classes can access, but external code must use getters/setters
-  protected trackingNumber: number;
+  protected trackingNumber: string;
   protected shippingMethod: ShippingMethod;
   protected status: PackageStatus;
   protected senderName: string;
@@ -15,7 +14,7 @@ export abstract class Package {
   protected flatFee: number;
 
   constructor(
-    trackingNumber: number,
+    trackingNumber: string,
     shippingMethod: ShippingMethod,
     status: PackageStatus,
     senderName: string,
@@ -39,7 +38,7 @@ export abstract class Package {
   }
 
   // ----- Getters -----
-  public getTrackingNumber(): number {
+  public getTrackingNumber(): string {
     return this.trackingNumber;
   }
 

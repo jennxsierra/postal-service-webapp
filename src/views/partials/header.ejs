@@ -1,9 +1,24 @@
+<!-- src/views/partials/header.ejs -->
 <header>
-  <h1>Postal Service Web App</h1>
   <nav>
-    <ul>
-      <li><a href="/">Home</a></li>
-      <!-- Additional nav links go here -->
+    <!-- Logo / Title area -->
+    <div class="navbar-logo">Postal Service</div>
+
+    <!-- Navigation Links -->
+    <ul class="navbar-links">
+      <li><a href="/packages">All Packages</a></li>
+      <li><a href="/packages/new">Add New Package</a></li>
     </ul>
+
+    <!-- Search Form -->
+    <form class="navbar-search" action="/packages/search" method="GET">
+      <input
+        type="text"
+        name="trackingNumber"
+        placeholder="Search by Tracking #"
+        aria-label="Search"
+      />
+      <button type="submit">Search</button>
+    </form>
   </nav>
 </header>

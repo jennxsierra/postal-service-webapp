@@ -1,17 +1,19 @@
-// src/controllers/packageController.ts
 import { Request, Response } from "express";
 import { postalSystem } from "../singletons/postalSystem";
 import { PackageStatus } from "../enums";
+import { generateTrackingNumber } from "../utils/trackingNumberGenerator";
 
-// Show form
+export function listPackages(req: Request, res: Response) {
+  const allPackages = postalSystem.getAllPackages();
+  res.render("packages/list", { packages: allPackages });
+}
+
 export function showNewPackageForm(req: Request, res: Response) {
   res.render("packages/new");
 }
 
-// Create package
 export function createPackage(req: Request, res: Response) {
   const {
-    trackingNumber,
     senderName,
     senderAddress,
     receiverName,
@@ -22,9 +24,11 @@ export function createPackage(req: Request, res: Response) {
     shippingMethod,
   } = req.body;
 
+  const trackingNumber = generateTrackingNumber(); // generate our alphanumeric tracking number
+
   if (shippingMethod === "TwoDay") {
     postalSystem.addTwoDayPackage(
-      Number(trackingNumber),
+      trackingNumber,
       senderName,
       senderAddress,
       receiverName,
@@ -34,9 +38,9 @@ export function createPackage(req: Request, res: Response) {
       Number(flatFee)
     );
   } else {
-    // default to OneDay
+    // default to OneDay if shippingMethod isn't "TwoDay"
     postalSystem.addOneDayPackage(
-      Number(trackingNumber),
+      trackingNumber,
       senderName,
       senderAddress,
       receiverName,
@@ -50,31 +54,34 @@ export function createPackage(req: Request, res: Response) {
   res.redirect("/packages");
 }
 
-export function listPackages(req: Request, res: Response) {
-  const all = postalSystem.getAllPackages();
-  res.render("packages/list", { packages: all });
-}
-
 export function getPackageDetails(req: Request, res: Response) {
   const { trackingNumber } = req.params;
-  const pkg = postalSystem.findPackage(Number(trackingNumber));
-
+  const pkg = postalSystem.findPackage(trackingNumber);
   if (!pkg) {
     return res.status(404).send("Package not found");
   }
 
-  // Evaluate the cost by calling the overridden method
   const cost = pkg.calculateCost();
-
-  // Passing both the package object and the cost to the template
   res.render("packages/details", { package: pkg, cost });
 }
 
 export function updateStatus(req: Request, res: Response) {
-  const tracking = Number(req.params.trackingNumber);
-  const { newStatus } = req.body;
+  const trackingNumber = req.params.trackingNumber;
+  const newStatus = req.body.newStatus as PackageStatus;
+  postalSystem.updatePackageStatus(trackingNumber, newStatus);
+  res.redirect(`/packages/${trackingNumber}`);
+}
 
-  // Validate newStatus or cast it to PackageStatus if needed
-  postalSystem.updatePackageStatus(tracking, newStatus as PackageStatus);
-  res.redirect(`/packages/${tracking}`);
+export function searchPackage(req: Request, res: Response) {
+  const trackingNumber = req.query.trackingNumber as string;
+  if (!trackingNumber) {
+    return res.redirect("/packages");
+  }
+
+  const pkg = postalSystem.findPackage(trackingNumber);
+  if (!pkg) {
+    return res.status(404).send("Package not found");
+  }
+
+  res.redirect(`/packages/${trackingNumber}`);
 }

@@ -6,9 +6,13 @@ import {
   createPackage,
   getPackageDetails,
   updateStatus,
+  searchPackage,
 } from "../controllers/packageController";
 
 const router = Router();
+
+// GET /packages/search -> Search by tracking number
+router.get("/search", searchPackage);
 
 // GET /packages -> List all packages
 router.get("/", listPackages);
@@ -22,7 +26,7 @@ router.post("/", createPackage);
 // GET /packages/:trackingNumber -> Show package details
 router.get("/:trackingNumber", getPackageDetails);
 
-// POST /packages/:trackingNumber/status -> Update package status
-router.post('/:trackingNumber/status', updateStatus);
+// POST /packages/:trackingNumber/status -> Update status
+router.post("/:trackingNumber/status", updateStatus);
 
 export default router;

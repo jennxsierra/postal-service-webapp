@@ -8,7 +8,7 @@ export class PostalSystem {
   private packages: Package[] = []; // store child objects of type Package
 
   public addOneDayPackage(
-    trackingNumber: number,
+    trackingNumber: string,
     senderName: string,
     senderAddress: string,
     receiverName: string,
@@ -32,7 +32,7 @@ export class PostalSystem {
   }
 
   public addTwoDayPackage(
-    trackingNumber: number,
+    trackingNumber: string,
     senderName: string,
     senderAddress: string,
     receiverName: string,
@@ -55,7 +55,7 @@ export class PostalSystem {
     return pkg;
   }
 
-  public findPackage(trackingNumber: number): Package | undefined {
+  public findPackage(trackingNumber: string): Package | undefined {
     return this.packages.find(
       (pkg) => pkg.getTrackingNumber() === trackingNumber
     );
@@ -66,7 +66,7 @@ export class PostalSystem {
   }
 
   public updatePackageStatus(
-    trackingNumber: number,
+    trackingNumber: string,
     newStatus: PackageStatus
   ): boolean {
     const pkg = this.findPackage(trackingNumber);

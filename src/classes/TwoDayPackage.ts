@@ -4,7 +4,7 @@ import { ShippingMethod, PackageStatus } from "../enums";
 
 export class TwoDayPackage extends Package {
   constructor(
-    trackingNumber: number,
+    trackingNumber: string,
     senderName: string,
     senderAddress: string,
     receiverName: string,
