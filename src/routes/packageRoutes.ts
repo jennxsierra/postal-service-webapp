@@ -5,6 +5,7 @@ import {
   showNewPackageForm,
   createPackage,
   getPackageDetails,
+  updateStatus,
 } from "../controllers/packageController";
 
 const router = Router();
@@ -20,5 +21,8 @@ router.post("/", createPackage);
 
 // GET /packages/:trackingNumber -> Show package details
 router.get("/:trackingNumber", getPackageDetails);
+
+// POST /packages/:trackingNumber/status -> Update package status
+router.post('/:trackingNumber/status', updateStatus);
 
 export default router;

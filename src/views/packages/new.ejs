@@ -2,46 +2,49 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Add a New Package</title>
+    <title>Create a New Package</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
     <%- include('../partials/header.ejs') %>
+
     <h2>Create a New Package</h2>
     <form action="/packages" method="POST">
       <label for="trackingNumber">Tracking Number:</label>
-      <input type="number" name="trackingNumber" id="trackingNumber" required />
+      <input type="number" name="trackingNumber" required />
 
       <label for="senderName">Sender Name:</label>
-      <input type="text" name="senderName" id="senderName" required />
+      <input type="text" name="senderName" required />
 
       <label for="senderAddress">Sender Address:</label>
-      <input type="text" name="senderAddress" id="senderAddress" required />
+      <input type="text" name="senderAddress" required />
 
       <label for="receiverName">Receiver Name:</label>
-      <input type="text" name="receiverName" id="receiverName" required />
+      <input type="text" name="receiverName" required />
 
       <label for="receiverAddress">Receiver Address:</label>
-      <input type="text" name="receiverAddress" id="receiverAddress" required />
+      <input type="text" name="receiverAddress" required />
 
-      <label for="weight">Weight:</label>
-      <input type="number" step="0.01" name="weight" id="weight" required />
+      <label for="weight">Weight (kg):</label>
+      <input type="number" step="0.01" name="weight" required />
 
-      <label for="costPerUnitWeight">Cost Per Unit Weight:</label>
-      <input
-        type="number"
-        step="0.01"
-        name="costPerUnitWeight"
-        id="costPerUnitWeight"
-        required
-      />
+      <label for="costPerUnitWeight">Cost Per Unit Weight ($/kg):</label>
+      <input type="number" step="0.01" name="costPerUnitWeight" required />
 
-      <label for="flatFee">Flat Fee:</label>
-      <input type="number" step="0.01" name="flatFee" id="flatFee" required />
+      <label for="flatFee">Flat Fee ($):</label>
+      <input type="number" step="0.01" name="flatFee" required />
+
+      <label for="shippingMethod">Shipping Method:</label>
+      <select name="shippingMethod">
+        <option value="OneDay">One Day</option>
+        <option value="TwoDay">Two Day</option>
+      </select>
 
       <button type="submit">Create Package</button>
     </form>
+
     <p><a href="/packages">Back to All Packages</a></p>
+
     <%- include('../partials/footer.ejs') %>
   </body>
 </html>

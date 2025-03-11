@@ -7,8 +7,10 @@
   </head>
   <body>
     <%- include('../partials/header.ejs') %>
+
     <h2>All Packages</h2>
     <p><a href="/packages/new">Add a New Package</a></p>
+
     <table>
       <thead>
         <tr>
@@ -16,27 +18,31 @@
           <th>Sender</th>
           <th>Receiver</th>
           <th>Weight</th>
-          <th>Method</th>
+          <th>Shipping Method</th>
           <th>Status</th>
+          <th>Cost</th>
         </tr>
       </thead>
       <tbody>
         <% packages.forEach(pkg => { %>
         <tr>
+          <!-- Link to details page for each package -->
           <td>
-            <a href="/packages/<%= pkg.trackingNumber %>"
-              ><%= pkg.trackingNumber %></a
-            >
+            <a href="/packages/<%= pkg.getTrackingNumber() %>">
+              <%= pkg.getTrackingNumber() %>
+            </a>
           </td>
-          <td><%= pkg.senderName %></td>
-          <td><%= pkg.receiverName %></td>
-          <td><%= pkg.weight %></td>
-          <td><%= pkg.shippingMethod %></td>
-          <td><%= pkg.status %></td>
+          <td><%= pkg.getSenderName() %></td>
+          <td><%= pkg.getReceiverName() %></td>
+          <td><%= pkg.getWeight() %></td>
+          <td><%= pkg.getShippingMethod() %></td>
+          <td><%= pkg.getStatus() %></td>
+          <td>$<%= pkg.calculateCost() %></td>
         </tr>
         <% }) %>
       </tbody>
     </table>
+
     <%- include('../partials/footer.ejs') %>
   </body>
 </html>

@@ -7,21 +7,47 @@
   </head>
   <body>
     <%- include('../partials/header.ejs') %>
-    <h2>Package <%= package.trackingNumber %> Details</h2>
+
+    <h2>Package #<%= package.getTrackingNumber() %> Details</h2>
     <p>
-      <strong>Sender:</strong> <%= package.senderName %> | <%=
-      package.senderAddress %>
+      <strong>Sender:</strong> <%= package.getSenderName() %> (<%=
+      package.getSenderAddress() %>)
     </p>
     <p>
-      <strong>Receiver:</strong> <%= package.receiverName %> | <%=
-      package.receiverAddress %>
+      <strong>Receiver:</strong> <%= package.getReceiverName() %> (<%=
+      package.getReceiverAddress() %>)
     </p>
-    <p><strong>Weight:</strong> <%= package.weight %></p>
-    <p><strong>Cost/Unit Weight:</strong> <%= package.costPerUnitWeight %></p>
-    <p><strong>Flat Fee:</strong> <%= package.flatFee %></p>
-    <p><strong>Shipping Method:</strong> <%= package.shippingMethod %></p>
-    <p><strong>Status:</strong> <%= package.status %></p>
+    <p><strong>Weight (kg):</strong> <%= package.getWeight() %></p>
+    <p>
+      <strong>Cost/Unit Weight ($/kg):</strong> <%=
+      package.getCostPerUnitWeight() %>
+    </p>
+    <p><strong>Flat Fee ($):</strong> <%= package.getFlatFee() %></p>
+    <p><strong>Shipping Method:</strong> <%= package.getShippingMethod() %></p>
+    <p><strong>Status:</strong> <%= package.getStatus() %></p>
+    <p>
+      <strong>Calculated Cost:</strong> $<%= cost || package.calculateCost() %>
+    </p>
+
+    <hr />
+
+    <!-- Update status form -->
+    <h3>Update Status</h3>
+    <form
+      action="/packages/<%= package.getTrackingNumber() %>/status"
+      method="POST"
+    >
+      <label for="newStatus">Update Status:</label>
+      <select name="newStatus" id="newStatus">
+        <option value="Created">Created</option>
+        <option value="In-Transit">In-Transit</option>
+        <option value="Delivered">Delivered</option>
+      </select>
+      <button type="submit">Update</button>
+    </form>
+
     <p><a href="/packages">Back to All Packages</a></p>
+
     <%- include('../partials/footer.ejs') %>
   </body>
 </html>
