@@ -73,7 +73,7 @@ export function updateStatus(req: Request, res: Response) {
 }
 
 export function searchPackage(req: Request, res: Response) {
-  const trackingNumber = req.query.trackingNumber as string;
+  const trackingNumber = (req.query.trackingNumber as string).trim();
   if (!trackingNumber) {
     return res.redirect("/packages");
   }

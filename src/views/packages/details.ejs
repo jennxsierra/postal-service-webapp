@@ -7,46 +7,50 @@
   </head>
   <body>
     <%- include('../partials/header.ejs') %>
+    <div class="container">
+      <h2>Package #<%= package.getTrackingNumber() %> Details</h2>
+      <p>
+        <strong>Sender:</strong> <%= package.getSenderName() %> (<%=
+        package.getSenderAddress() %>)
+      </p>
+      <p>
+        <strong>Receiver:</strong> <%= package.getReceiverName() %> (<%=
+        package.getReceiverAddress() %>)
+      </p>
+      <p><strong>Weight (kg):</strong> <%= package.getWeight() %></p>
+      <p>
+        <strong>Cost/Unit Weight ($/kg):</strong> <%=
+        package.getCostPerUnitWeight() %>
+      </p>
+      <p><strong>Flat Fee ($):</strong> <%= package.getFlatFee() %></p>
+      <p>
+        <strong>Shipping Method:</strong> <%= package.getShippingMethod() %>
+      </p>
+      <p><strong>Status:</strong> <%= package.getStatus() %></p>
+      <p>
+        <strong>Calculated Cost:</strong> $<%= cost || package.calculateCost()
+        %>
+      </p>
 
-    <h2>Package #<%= package.getTrackingNumber() %> Details</h2>
-    <p>
-      <strong>Sender:</strong> <%= package.getSenderName() %> (<%=
-      package.getSenderAddress() %>)
-    </p>
-    <p>
-      <strong>Receiver:</strong> <%= package.getReceiverName() %> (<%=
-      package.getReceiverAddress() %>)
-    </p>
-    <p><strong>Weight (kg):</strong> <%= package.getWeight() %></p>
-    <p>
-      <strong>Cost/Unit Weight ($/kg):</strong> <%=
-      package.getCostPerUnitWeight() %>
-    </p>
-    <p><strong>Flat Fee ($):</strong> <%= package.getFlatFee() %></p>
-    <p><strong>Shipping Method:</strong> <%= package.getShippingMethod() %></p>
-    <p><strong>Status:</strong> <%= package.getStatus() %></p>
-    <p>
-      <strong>Calculated Cost:</strong> $<%= cost || package.calculateCost() %>
-    </p>
+      <hr />
 
-    <hr />
+      <!-- Update status form -->
+      <h3>Update Status</h3>
+      <form
+        action="/packages/<%= package.getTrackingNumber() %>/status"
+        method="POST"
+      >
+        <label for="newStatus">Update Status:</label>
+        <select name="newStatus" id="newStatus">
+          <option value="Created">Created</option>
+          <option value="In-Transit">In-Transit</option>
+          <option value="Delivered">Delivered</option>
+        </select>
+        <button type="submit">Update</button>
+      </form>
 
-    <!-- Update status form -->
-    <h3>Update Status</h3>
-    <form
-      action="/packages/<%= package.getTrackingNumber() %>/status"
-      method="POST"
-    >
-      <label for="newStatus">Update Status:</label>
-      <select name="newStatus" id="newStatus">
-        <option value="Created">Created</option>
-        <option value="In-Transit">In-Transit</option>
-        <option value="Delivered">Delivered</option>
-      </select>
-      <button type="submit">Update</button>
-    </form>
-
-    <p><a href="/packages">Back to All Packages</a></p>
+      <p><a href="/packages">Back to All Packages</a></p>
+    </div>
 
     <%- include('../partials/footer.ejs') %>
   </body>
