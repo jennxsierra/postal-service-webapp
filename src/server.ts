@@ -24,6 +24,11 @@ app.get("/", (req, res) => {
 // Mount package routes
 app.use("/packages", packageRoutes);
 
+// 404 handler
+app.use((req, res, next) => {
+  res.status(404).render("404", { message: "Page Not Found" });
+});
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

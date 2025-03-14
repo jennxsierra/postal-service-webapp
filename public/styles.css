@@ -23,6 +23,11 @@ header nav {
   font-size: 1.2rem;
 }
 
+.navbar-logo a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .navbar-links {
   list-style-type: none;
   display: flex;

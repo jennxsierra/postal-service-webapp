@@ -80,7 +80,7 @@ export function searchPackage(req: Request, res: Response) {
 
   const pkg = postalSystem.findPackage(trackingNumber);
   if (!pkg) {
-    return res.status(404).send("Package not found");
+    return res.status(404).render("404", { message: "Package not found" });
   }
 
   res.redirect(`/packages/${trackingNumber}`);
