@@ -3,6 +3,7 @@ import express from "express";
 import path from "path";
 import bodyParser from "body-parser";
 import packageRoutes from "./routes/packageRoutes";
+import logger from "./middleware/logger";
 import { loadTestData } from "./middleware/loadTestData";
 
 const app = express();
@@ -16,6 +17,9 @@ app.use(express.static(path.join(__dirname, "..", "public")));
 
 // Parse incoming form data
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Use the logger middleware
+app.use(logger);
 
 // Load test data middleware
 app.use(loadTestData);

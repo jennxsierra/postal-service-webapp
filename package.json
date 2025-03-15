@@ -15,11 +15,13 @@
   "dependencies": {
     "bwip-js": "^4.5.2",
     "ejs": "^3.1.10",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "@types/ejs": "^3.1.5",
     "@types/express": "^4.17.17",
+    "@types/morgan": "^1.9.9",
     "@types/node": "^22.13.10",
     "nodemon": "^3.1.9",
     "ts-node": "^10.9.2",
