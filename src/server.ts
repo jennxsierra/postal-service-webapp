@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Basic home route
 app.get("/", (req, res) => {
-  res.render("index", { message: "Hello from Postal Service!" });
+  res.render("index", { message: "Welcome to the Postal Service System! 📦" });
 });
 
 // Mount package routes

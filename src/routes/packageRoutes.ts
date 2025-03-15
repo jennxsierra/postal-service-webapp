@@ -8,6 +8,7 @@ import {
   updateStatus,
   searchPackage,
 } from "../controllers/packageController";
+import { generateBarcode } from "../controllers/barcodeController";
 
 const router = Router();
 
@@ -28,5 +29,8 @@ router.get("/:trackingNumber", getPackageDetails);
 
 // POST /packages/:trackingNumber/status -> Update status
 router.post("/:trackingNumber/status", updateStatus);
+
+// GET /packages/:trackingNumber/barcode -> Generate barcode
+router.get("/:trackingNumber/barcode", generateBarcode);
 
 export default router;

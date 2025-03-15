@@ -2,14 +2,17 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Postal Service Web App</title>
+    <title>Postal Service System</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <%- include('partials/header') %>
     <div class="container">
-      <h2><%= message %></h2>
-      <p>Your postal service application is running!</p>
+      <h1><%= message %></h1>
+      <div class="options">
+        <a href="/packages" class="button">All Packages</a>
+        <a href="/packages/new" class="button">Add New Package</a>
+      </div>
     </div>
 
     <%- include('partials/footer') %>

@@ -8,40 +8,43 @@
   <body>
     <%- include('../partials/header.ejs') %>
     <div class="container">
-      <h2>All Packages</h2>
-      <p><a href="/packages/new">Add a New Package</a></p>
+      <h1>All Packages</h1>
+      <div class="table-header">
+        <a href="/packages/new" class="button">Add New Package</a>
+      </div>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Tracking #</th>
-            <th>Sender</th>
-            <th>Receiver</th>
-            <th>Weight</th>
-            <th>Shipping Method</th>
-            <th>Status</th>
-            <th>Cost</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% packages.forEach(pkg => { %>
-          <tr>
-            <!-- Link to details page for each package -->
-            <td>
-              <a href="/packages/<%= pkg.getTrackingNumber() %>">
-                <%= pkg.getTrackingNumber() %>
-              </a>
-            </td>
-            <td><%= pkg.getSenderName() %></td>
-            <td><%= pkg.getReceiverName() %></td>
-            <td><%= pkg.getWeight() %></td>
-            <td><%= pkg.getShippingMethod() %></td>
-            <td><%= pkg.getStatus() %></td>
-            <td>$<%= pkg.calculateCost() %></td>
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
+      <div class="table-container">
+        <table class="packages-table">
+          <thead>
+            <tr>
+              <th>Tracking #</th>
+              <th>Sender</th>
+              <th>Receiver</th>
+              <th>Weight</th>
+              <th>Shipping Method</th>
+              <th>Status</th>
+              <th>Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% packages.forEach(pkg => { %>
+            <tr>
+              <td>
+                <a href="/packages/<%= pkg.getTrackingNumber() %>">
+                  <%= pkg.getTrackingNumber() %>
+                </a>
+              </td>
+              <td><%= pkg.getSenderName() %></td>
+              <td><%= pkg.getReceiverName() %></td>
+              <td><%= pkg.getWeight() %></td>
+              <td><%= pkg.getShippingMethod() %></td>
+              <td><%= pkg.getStatus() %></td>
+              <td>$<%= pkg.calculateCost() %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <%- include('../partials/footer.ejs') %>

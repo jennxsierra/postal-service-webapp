@@ -1,3 +1,4 @@
+<!-- filepath: /home/jsierra/projects/postal-service-webapp/src/views/packages/details.ejs -->
 <!DOCTYPE html>
 <html>
   <head>
@@ -7,49 +8,63 @@
   </head>
   <body>
     <%- include('../partials/header.ejs') %>
+
     <div class="container">
-      <h2>Package #<%= package.getTrackingNumber() %> Details</h2>
-      <p>
-        <strong>Sender:</strong> <%= package.getSenderName() %> (<%=
-        package.getSenderAddress() %>)
-      </p>
-      <p>
-        <strong>Receiver:</strong> <%= package.getReceiverName() %> (<%=
-        package.getReceiverAddress() %>)
-      </p>
-      <p><strong>Weight (kg):</strong> <%= package.getWeight() %></p>
-      <p>
-        <strong>Cost/Unit Weight ($/kg):</strong> <%=
-        package.getCostPerUnitWeight() %>
-      </p>
-      <p><strong>Flat Fee ($):</strong> <%= package.getFlatFee() %></p>
-      <p>
-        <strong>Shipping Method:</strong> <%= package.getShippingMethod() %>
-      </p>
-      <p><strong>Status:</strong> <%= package.getStatus() %></p>
-      <p>
-        <strong>Calculated Cost:</strong> $<%= cost || package.calculateCost()
-        %>
-      </p>
+      <div class="details-container">
+        <div class="label-container">
+          <div class="label-header">
+            <h2>Priority Mail</h2>
+            <p>Date: <%= new Date().toLocaleDateString() %></p>
+          </div>
+          <div class="label-section">
+            <strong>To:</strong>
+            <p><%= package.getReceiverName() %></p>
+            <p><%= package.getReceiverAddress() %></p>
+          </div>
+          <div class="label-section">
+            <strong>From:</strong>
+            <p><%= package.getSenderName() %></p>
+            <p><%= package.getSenderAddress() %></p>
+          </div>
+          <div class="label-section">
+            <strong>Weight (kg):</strong>
+            <p><%= package.getWeight() %></p>
+          </div>
+          <div class="label-section">
+            <strong>Shipping Method:</strong>
+            <p><%= package.getShippingMethod() %></p>
+          </div>
+          <div class="label-section">
+            <strong>Status:</strong>
+            <p><%= package.getStatus() %></p>
+          </div>
+          <div class="label-section">
+            <strong>Calculated Cost:</strong>
+            <p>$<%= cost || package.calculateCost() %></p>
+          </div>
+          <div class="label-barcode">
+            <img
+              src="/packages/<%= package.getTrackingNumber() %>/barcode"
+              alt="Barcode"
+            />
+          </div>
+        </div>
 
-      <hr />
-
-      <!-- Update status form -->
-      <h3>Update Status</h3>
-      <form
-        action="/packages/<%= package.getTrackingNumber() %>/status"
-        method="POST"
-      >
-        <label for="newStatus">Update Status:</label>
-        <select name="newStatus" id="newStatus">
-          <option value="Created">Created</option>
-          <option value="In-Transit">In-Transit</option>
-          <option value="Delivered">Delivered</option>
-        </select>
-        <button type="submit">Update</button>
-      </form>
-
-      <p><a href="/packages">Back to All Packages</a></p>
+        <div class="update-section">
+          <form action="/packages/<%= package.getTrackingNumber() %>/status" method="POST">
+            <label for="newStatus">Update Status:</label>
+            <select name="newStatus" id="newStatus">
+              <option value="Created" <%= package.getStatus() === 'Created' ? 'selected' : '' %>>Created</option>
+              <option value="In-Transit" <%= package.getStatus() === 'In-Transit' ? 'selected' : '' %>>In-Transit</option>
+              <option value="Delivered" <%= package.getStatus() === 'Delivered' ? 'selected' : '' %>>Delivered</option>
+            </select>
+            <button type="submit" class="button">Update</button>
+          </form>
+        </div>
+      </div>
+      <div class="back-btn">
+        <a href="/packages" class="button">&#129136; Back to All Packages</a>
+      </div>
     </div>
 
     <%- include('../partials/footer.ejs') %>

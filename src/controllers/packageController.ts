@@ -68,7 +68,10 @@ export function getPackageDetails(req: Request, res: Response) {
 export function updateStatus(req: Request, res: Response) {
   const trackingNumber = req.params.trackingNumber;
   const newStatus = req.body.newStatus as PackageStatus;
-  postalSystem.updatePackageStatus(trackingNumber, newStatus);
+  const updated = postalSystem.updatePackageStatus(trackingNumber, newStatus);
+  if (!updated) {
+    return res.status(404).send("Package not found");
+  }
   res.redirect(`/packages/${trackingNumber}`);
 }
 
