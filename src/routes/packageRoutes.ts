@@ -12,6 +12,7 @@ import {
   removePackage,
 } from "../controllers/packageController";
 import { generateBarcode } from "../controllers/barcodeController";
+import { validatePackage } from "../middleware/validatePackage";
 
 const router = Router();
 
@@ -25,7 +26,7 @@ router.get("/", listPackages);
 router.get("/new", showNewPackageForm);
 
 // POST /packages -> Create a new package
-router.post("/", createPackage);
+router.post("/", validatePackage, createPackage);
 
 // GET /packages/remove -> Show form to remove a package
 router.get("/remove", showRemovePackageForm);

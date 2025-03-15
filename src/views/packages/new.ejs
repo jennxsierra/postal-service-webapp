@@ -10,47 +10,56 @@
     <%- include('../partials/header.ejs') %>
     <div class="container">
       <h1>Add a New Package</h1>
+      <% if (errors && errors.length > 0) { %>
+        <div class="error-messages">
+          <ul>
+            <% errors.forEach(error => { %>
+              <li>⚠️ <%= error.msg %>.</li>
+            <% }) %>
+          </ul>
+        </div>
+      <% } %>
       <form class="package-form" action="/packages" method="POST">
         <div class="form-group">
           <label for="senderName">Sender Name:</label>
-          <input type="text" name="senderName" required />
+          <input type="text" name="senderName" value="<%= senderName %>" />
         </div>
 
         <div class="form-group">
           <label for="senderAddress">Sender Address:</label>
-          <input type="text" name="senderAddress" required />
+          <input type="text" name="senderAddress" value="<%= senderAddress %>" />
         </div>
 
         <div class="form-group">
           <label for="receiverName">Receiver Name:</label>
-          <input type="text" name="receiverName" required />
+          <input type="text" name="receiverName" value="<%= receiverName %>" />
         </div>
 
         <div class="form-group">
           <label for="receiverAddress">Receiver Address:</label>
-          <input type="text" name="receiverAddress" required />
+          <input type="text" name="receiverAddress" value="<%= receiverAddress %>" />
         </div>
 
         <div class="form-group">
           <label for="weight">Weight (kg):</label>
-          <input type="number" step="1" name="weight" required />
+          <input type="number" step="0.01" name="weight" value="<%= weight %>" />
         </div>
 
         <div class="form-group">
           <label for="costPerUnitWeight">Cost Per Unit Weight ($/kg):</label>
-          <input type="number" step="1" name="costPerUnitWeight" required />
+          <input type="number" step="0.01" name="costPerUnitWeight" value="<%= costPerUnitWeight %>" />
         </div>
 
         <div class="form-group">
           <label for="flatFee">Flat Fee ($):</label>
-          <input type="number" step="1" name="flatFee" required />
+          <input type="number" step="0.01" name="flatFee" value="<%= flatFee %>" />
         </div>
 
         <div class="form-group">
           <label for="shippingMethod">Shipping Method:</label>
           <select name="shippingMethod">
-            <option value="OneDay">One Day</option>
-            <option value="TwoDay">Two Day</option>
+            <option value="OneDay" <%= shippingMethod === 'OneDay' ? 'selected' : '' %>>One Day</option>
+            <option value="TwoDay" <%= shippingMethod === 'TwoDay' ? 'selected' : '' %>>Two Day</option>
           </select>
         </div>
 

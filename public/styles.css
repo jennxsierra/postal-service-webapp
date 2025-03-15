@@ -1,7 +1,21 @@
 /* public/styles.css */
+
+html,
 body {
+  height: 100%;
   margin: 0;
   font-family: Arial, sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 header {
@@ -141,6 +155,15 @@ header nav {
   background-color: #f9f9f9;
   width: 100%;
   max-width: 500px;
+}
+
+.error-messages ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.error-messages li {
+  color: red;
 }
 
 .form-group {
@@ -368,8 +391,8 @@ header nav {
 
 footer {
   background-color: #eee;
+  padding: 0.5rem;
   text-align: center;
-  position: fixed;
-  bottom: 0;
   width: 100%;
+  margin-top: auto;
 }

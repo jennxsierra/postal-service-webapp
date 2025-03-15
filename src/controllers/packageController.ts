@@ -9,7 +9,17 @@ export function listPackages(req: Request, res: Response) {
 }
 
 export function showNewPackageForm(req: Request, res: Response) {
-  res.render("packages/new");
+  res.render("packages/new", {
+    errors: [],
+    senderName: "",
+    senderAddress: "",
+    receiverName: "",
+    receiverAddress: "",
+    weight: "",
+    costPerUnitWeight: "",
+    flatFee: "",
+    shippingMethod: "",
+  });
 }
 
 export function createPackage(req: Request, res: Response) {
