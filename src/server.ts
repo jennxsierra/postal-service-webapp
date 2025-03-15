@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import packageRoutes from "./routes/packageRoutes";
 import logger from "./middleware/logger";
 import { loadTestData } from "./middleware/loadTestData";
+import { getLocalIPAddress } from "./utils/networkUtils";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -39,5 +40,9 @@ app.use((req, res, next) => {
 
 // Start the server
 app.listen(PORT, () => {
+  const ipAddress = getLocalIPAddress();
   console.log(`Server running on http://localhost:${PORT}`);
+  console.log(
+    `Access the server from another computer at http://${ipAddress}:${PORT}`
+  );
 });

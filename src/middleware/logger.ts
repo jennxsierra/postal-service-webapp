@@ -1,12 +1,18 @@
 import morgan from "morgan";
-import { Request, Response, NextFunction } from "express";
+import { Request } from "express";
 
 // Define a custom token to log the request body
 morgan.token("body", (req: Request) => JSON.stringify(req.body));
 
-// Create a custom format that includes the request body
+// Define a custom token to log the timestamp in a more readable format
+morgan.token("timestamp", () => {
+  const now = new Date();
+  return now.toLocaleString();
+});
+
+// Create a custom format that includes the request body and readable timestamp
 const customFormat =
-  ":method :url :status :res[content-length] - :response-time ms :body";
+  "[:timestamp] :method :url :status :res[content-length] - :response-time ms :body";
 
 const logger = morgan(customFormat);
 
