@@ -65,6 +65,16 @@ export class PostalSystem {
     return this.packages;
   }
 
+  public removePackage(trackingNumber: string): boolean {
+    const index = this.packages.findIndex(
+      (pkg) => pkg.getTrackingNumber() === trackingNumber
+    );
+    if (index === -1) return false;
+
+    this.packages.splice(index, 1);
+    return true;
+  }
+
   public updatePackageStatus(
     trackingNumber: string,
     newStatus: PackageStatus

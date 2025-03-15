@@ -54,6 +54,31 @@ export function createPackage(req: Request, res: Response) {
   res.redirect("/packages");
 }
 
+export function showRemovePackageForm(req: Request, res: Response) {
+  res.render("packages/remove");
+}
+
+export function confirmRemovePackage(req: Request, res: Response) {
+  const { trackingNumber } = req.body;
+  const pkg = postalSystem.findPackage(trackingNumber);
+  if (!pkg) {
+    return res.status(404).render("404", { message: "Package not found" });
+  }
+
+  res.render("packages/confirmRemove", { pkg });
+}
+
+export function removePackage(req: Request, res: Response) {
+  const { trackingNumber } = req.body;
+  const pkg = postalSystem.findPackage(trackingNumber);
+  if (!pkg) {
+    return res.status(404).render("404", { message: "Package not found" });
+  }
+
+  postalSystem.removePackage(trackingNumber);
+  res.redirect("/packages");
+}
+
 export function getPackageDetails(req: Request, res: Response) {
   const { trackingNumber } = req.params;
   const pkg = postalSystem.findPackage(trackingNumber);

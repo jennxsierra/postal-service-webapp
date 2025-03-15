@@ -1,0 +1,69 @@
+<!--src/views/packages/confirmRemove.ejs-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Confirm Remove Package</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <%- include('../partials/header.ejs') %>
+
+    <div class="container">
+      <h1>Are you sure you want to remove this package?</h1>
+      <div class="remove-container">
+        <div class="label-header">
+          <h2>Priority Mail</h2>
+          <p>Date: <%= new Date().toLocaleDateString() %></p>
+        </div>
+        <div class="label-section">
+          <strong>To:</strong>
+          <p><%= pkg.receiverName %></p>
+          <p><%= pkg.receiverAddress %></p>
+        </div>
+        <div class="label-section">
+          <strong>From:</strong>
+          <p><%= pkg.senderName %></p>
+          <p><%= pkg.senderAddress %></p>
+        </div>
+        <div class="label-section">
+          <strong>Weight (kg):</strong>
+          <p><%= pkg.weight %></p>
+        </div>
+        <div class="label-section">
+          <strong>Shipping Method:</strong>
+          <p><%= pkg.shippingMethod %></p>
+        </div>
+        <div class="label-section">
+          <strong>Status:</strong>
+          <p><%= pkg.status %></p>
+        </div>
+        <div class="label-section">
+          <strong>Calculated Cost:</strong>
+          <p>$<%= pkg.calculateCost() %></p>
+        </div>
+        <div class="label-barcode">
+          <img
+            src="/packages/<%= pkg.trackingNumber %>/barcode"
+            alt="Barcode"
+          />
+        </div>
+      </div>
+      <div class="button-group">
+        <form class="remove-form" action="/packages/remove" method="POST">
+          <input
+            type="hidden"
+            name="trackingNumber"
+            value="<%= pkg.trackingNumber %>"
+          />
+          <button type="submit" class="remove-btn">Remove</button>
+        </form>
+        <div class="cancel-btn">
+          <a href="/" class="button">Cancel</a>
+        </div>
+      </div>
+    </div>
+
+    <%- include('../partials/footer.ejs') %>
+  </body>
+</html>

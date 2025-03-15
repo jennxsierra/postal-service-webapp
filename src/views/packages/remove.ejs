@@ -1,0 +1,32 @@
+<!-- src/views/packages/remove.ejs -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Remove a Package</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <%- include('../partials/header.ejs') %>
+    <div class="container">
+      <h1>Remove a Package</h1>
+      <form
+        class="package-form"
+        action="/packages/confirm-remove"
+        method="POST"
+      >
+        <div class="form-group">
+          <label for="trackingNumber">Tracking Number:</label>
+          <input type="text" name="trackingNumber" required />
+        </div>
+        <div class="submit-btn">
+          <button type="submit" class="button">Next</button>
+        </div>
+      </form>
+      <div class="back-btn">
+        <a href="/" class="button">&#129136; Back Home</a>
+      </div>
+    </div>
+    <%- include('../partials/footer.ejs') %>
+  </body>
+</html>
