@@ -36,7 +36,7 @@
               </td>
               <td><%= pkg.getSenderName() %></td>
               <td><%= pkg.getReceiverName() %></td>
-              <td><%= pkg.getWeight() %></td>
+              <td><%= pkg.getWeight() %>kg</td>
               <td><%= pkg.getShippingMethod() %></td>
               <td><%= pkg.getStatus() %></td>
               <td>$<%= pkg.calculateCost() %></td>
@@ -44,6 +44,10 @@
             <% }) %>
           </tbody>
         </table>
+      </div>
+
+      <div class="back-btn">
+        <a href="/" class="button">&#129136; Back Home</a>
       </div>
     </div>
 

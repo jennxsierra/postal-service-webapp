@@ -3,6 +3,7 @@ import express from "express";
 import path from "path";
 import bodyParser from "body-parser";
 import packageRoutes from "./routes/packageRoutes";
+import { loadTestData } from "./middleware/loadTestData";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -15,6 +16,9 @@ app.use(express.static(path.join(__dirname, "..", "public")));
 
 // Parse incoming form data
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Load test data middleware
+app.use(loadTestData);
 
 // Basic home route
 app.get("/", (req, res) => {
