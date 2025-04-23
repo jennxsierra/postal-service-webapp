@@ -1,8 +1,8 @@
-// src/classes/TwoDayPackage.ts
 import { Package } from "./Package";
-import { ShippingMethod, PackageStatus } from "../enums";
+import { ShippingMethod, PackageStatus } from "./enums";
+import { ITwoDayPackage } from "../interfaces/ITwoDayPackage";
 
-export class TwoDayPackage extends Package {
+export class TwoDayPackage extends Package implements ITwoDayPackage {
   constructor(
     trackingNumber: string,
     senderName: string,

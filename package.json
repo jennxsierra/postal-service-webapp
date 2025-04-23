@@ -2,11 +2,11 @@
   "name": "postal-service-webapp",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/server.js",
-    "dev": "nodemon --watch src --exec ts-node src/server.ts"
+    "start": "node dist/main.js",
+    "dev": "nodemon --watch src --exec ts-node src/main.ts"
   },
   "keywords": [],
   "author": "",

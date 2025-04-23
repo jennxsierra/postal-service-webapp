@@ -1,7 +1,7 @@
-// src/classes/Package.ts
-import { ShippingMethod, PackageStatus } from "../enums";
+import { ShippingMethod, PackageStatus } from "./enums";
+import { IPackage } from "../interfaces/IPackage";
 
-export abstract class Package {
+export abstract class Package implements IPackage {
   protected trackingNumber: string;
   protected shippingMethod: ShippingMethod;
   protected status: PackageStatus;
@@ -37,7 +37,6 @@ export abstract class Package {
     this.flatFee = flatFee;
   }
 
-  // ----- Getters -----
   public getTrackingNumber(): string {
     return this.trackingNumber;
   }
@@ -78,7 +77,6 @@ export abstract class Package {
     return this.flatFee;
   }
 
-  // ----- Setters -----
   public setStatus(newStatus: PackageStatus): void {
     this.status = newStatus;
   }

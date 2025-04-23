@@ -1,11 +1,10 @@
-// src/classes/PostalSystem.ts
-import { Package } from "./Package";
+import { IPostalSystem } from "../interfaces/IPostalSystem";
+import { IPackage } from "../interfaces/IPackage";
 import { OneDayPackage } from "./OneDayPackage";
 import { TwoDayPackage } from "./TwoDayPackage";
-import { ShippingMethod, PackageStatus } from "../enums";
 
-export class PostalSystem {
-  private packages: Package[] = []; // store child objects of type Package
+export class PostalSystem implements IPostalSystem {
+  private packages: IPackage[] = [];
 
   public addOneDayPackage(
     trackingNumber: string,
@@ -16,7 +15,7 @@ export class PostalSystem {
     weight: number,
     costPerUnitWeight: number,
     flatFee: number
-  ): Package {
+  ): IPackage {
     const pkg = new OneDayPackage(
       trackingNumber,
       senderName,
@@ -40,7 +39,7 @@ export class PostalSystem {
     weight: number,
     costPerUnitWeight: number,
     flatFee: number
-  ): Package {
+  ): IPackage {
     const pkg = new TwoDayPackage(
       trackingNumber,
       senderName,
@@ -55,34 +54,27 @@ export class PostalSystem {
     return pkg;
   }
 
-  public findPackage(trackingNumber: string): Package | undefined {
-    return this.packages.find(
-      (pkg) => pkg.getTrackingNumber() === trackingNumber
-    );
+  public findPackage(trackingNumber: string): IPackage | undefined {
+    return this.packages.find(pkg => pkg.getTrackingNumber() === trackingNumber);
   }
 
-  public getAllPackages(): Package[] {
+  public getAllPackages(): IPackage[] {
     return this.packages;
   }
 
   public removePackage(trackingNumber: string): boolean {
-    const index = this.packages.findIndex(
-      (pkg) => pkg.getTrackingNumber() === trackingNumber
-    );
+    const index = this.packages.findIndex(pkg => pkg.getTrackingNumber() === trackingNumber);
     if (index === -1) return false;
 
     this.packages.splice(index, 1);
     return true;
   }
 
-  public updatePackageStatus(
-    trackingNumber: string,
-    newStatus: PackageStatus
-  ): boolean {
+  public updatePackageStatus(trackingNumber: string, newStatus: string): boolean {
     const pkg = this.findPackage(trackingNumber);
     if (!pkg) return false;
 
-    pkg.setStatus(newStatus);
+    pkg.setStatus(newStatus as any);
     return true;
   }
 }

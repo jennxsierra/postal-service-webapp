@@ -1,7 +1,7 @@
 // src/utils/costCalculator.ts
 
-import { Package } from "../classes/Package";
-import { ShippingMethod } from "../enums";
+import { Package } from "../models/Package";
+import { ShippingMethod } from "../models/enums";
 
 export function calculateCost(pkg: Package): number {
   switch (pkg.getShippingMethod()) {

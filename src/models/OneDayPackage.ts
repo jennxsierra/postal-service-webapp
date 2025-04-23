@@ -1,8 +1,8 @@
-// src/classes/OneDayPackage.ts
 import { Package } from "./Package";
-import { ShippingMethod, PackageStatus } from "../enums";
+import { ShippingMethod, PackageStatus } from "./enums";
+import { IOneDayPackage } from "../interfaces/IOneDayPackage";
 
-export class OneDayPackage extends Package {
+export class OneDayPackage extends Package implements IOneDayPackage {
   constructor(
     trackingNumber: string,
     senderName: string,
@@ -27,7 +27,6 @@ export class OneDayPackage extends Package {
     );
   }
 
-  // Override the abstract methods:
   public calculateCost(): number {
     return this.getWeight() * this.getCostPerUnitWeight() + this.getFlatFee();
   }

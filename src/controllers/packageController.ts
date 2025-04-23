@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { postalSystem } from "../singletons/postalSystem";
-import { PackageStatus } from "../enums";
+import { PackageStatus } from "../models/enums";
 import { generateTrackingNumber } from "../utils/trackingNumberGenerator";
 
 export function listPackages(req: Request, res: Response) {
