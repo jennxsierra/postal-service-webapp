@@ -24,13 +24,8 @@ app.use(express.static(path.join(process.cwd(), "public")));
 app.set("view engine", "ejs");
 app.set("views", path.join(process.cwd(), "src/views"));
 
-// Basic home route
-app.get("/", (req, res) => {
-  res.render("index", { message: "Welcome to the Postal Service System! 📦" });
-});
-
 // Mount package routes
-app.use("/packages", packageRoutes);
+app.use("/", packageRoutes);
 
 // 404 handler
 app.use((req, res, next) => {

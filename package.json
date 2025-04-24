@@ -4,6 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
+    "clean": "rm -rf dist",
     "build": "tsc",
     "start": "node dist/main.js",
     "dev": "nodemon --watch src --exec ts-node src/main.ts"

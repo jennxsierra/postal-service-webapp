@@ -3,6 +3,17 @@ import { postalSystem } from "../singletons/postalSystem";
 import { PackageStatus } from "../models/enums";
 import { generateTrackingNumber } from "../utils/trackingNumberGenerator";
 
+export async function showHomePage(req: Request, res: Response) {
+  try {
+    res.render("index", {
+      message: "Welcome to the Postal Service System! 📦",
+    });
+  } catch (error) {
+    console.error("Error rendering home page:", error);
+    res.status(500).render("404", { message: "Failed to load the home page" });
+  }
+}
+
 export async function listPackages(req: Request, res: Response) {
   try {
     const allPackages = await postalSystem.getAllPackages(); // Await the result

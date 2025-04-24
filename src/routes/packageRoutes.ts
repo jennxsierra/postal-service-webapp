@@ -1,6 +1,6 @@
-// src/routes/packageRoutes.ts
 import { Router } from "express";
 import {
+  showHomePage,
   listPackages,
   showNewPackageForm,
   createPackage,
@@ -16,34 +16,37 @@ import { validatePackage } from "../middleware/validatePackage";
 
 const router = Router();
 
-// GET /packages/search -> Search by tracking number
-router.get("/search", searchPackage);
+// GET / -> Home route
+router.get("/", showHomePage);
 
 // GET /packages -> List all packages
-router.get("/", listPackages);
+router.get("/packages", listPackages);
+
+// GET /packages/search -> Search by tracking number
+router.get("/packages/search", searchPackage);
 
 // GET /packages/new -> Show form to create a package
-router.get("/new", showNewPackageForm);
+router.get("/packages/new", showNewPackageForm);
 
 // POST /packages -> Create a new package
-router.post("/", validatePackage, createPackage);
+router.post("/packages", validatePackage, createPackage);
 
 // GET /packages/remove -> Show form to remove a package
-router.get("/remove", showRemovePackageForm);
+router.get("/packages/remove", showRemovePackageForm);
 
 // POST /packages/confirm-remove -> Show confirmation page
-router.post("/confirm-remove", confirmRemovePackage);
+router.post("/packages/confirm-remove", confirmRemovePackage);
 
-// POST /packages/remove -> Remove a package
-router.delete("/remove", removePackage);
+// DELETE /packages/remove -> Remove a package
+router.delete("/packages/remove", removePackage);
 
 // GET /packages/:trackingNumber -> Show package details
-router.get("/:trackingNumber", getPackageDetails);
+router.get("/packages/:trackingNumber", getPackageDetails);
 
 // POST /packages/:trackingNumber/status -> Update status
-router.post("/:trackingNumber/status", updateStatus);
+router.post("/packages/:trackingNumber/status", updateStatus);
 
 // GET /packages/:trackingNumber/barcode -> Generate barcode
-router.get("/:trackingNumber/barcode", generateBarcode);
+router.get("/packages/:trackingNumber/barcode", generateBarcode);
 
 export default router;
