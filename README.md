@@ -125,7 +125,11 @@ This project is a Postal Service web application that demonstrates server-side r
    package_db=# \dt
    ```
 
-   You should see a table named `packages` in the list.
+   You should see a table named `packages` in the list. Once you confirm the table exists, grant table permissions to the user:
+
+   ```sql
+   package_db=# GRANT SELECT, INSERT, UPDATE, DELETE ON packages TO package_user;
+   ```
 
 > [!WARNING]
 >
