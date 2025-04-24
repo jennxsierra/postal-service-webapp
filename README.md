@@ -1,179 +1,245 @@
 # Postal Service Web Application
 
-> [!NOTE]  
-> This application was created for educational purposes and is not intended for production use. It does not implement security features or backend functionality.
+This project is a Postal Service web application that demonstrates server-side rendering using Node.js, Express, and EJS. It allows users to manage postal packages, including creating, viewing, updating, and removing packages. The application also features barcode generation and shipping cost calculation.
 
-This project is a web application for managing postal packages created for [CMPS2232] Object Oriented Programming. It implements languages and tools learned in [CMPS2212] GUI Programming. These include **TypeScript**, **Node.js**, **Express**, and **EJS**.
+## Table of Contents
 
-In short, the application allows users to create, view, update, and remove packages. It also includes features for generating barcodes and calculating shipping costs that are integrated into the application.
+- [Features](#features)
+- [Installation](#installation)
+- [Database Setup](#database-setup)
+- [Environment Variables](#environment-variables)
+- [Running the App](#running-the-app)
+- [Project Structure](#project-structure)
+- [Usage](#usage)
+  - [Adding a Package](#1-adding-a-package)
+  - [Viewing All Packages](#2-viewing-all-packages)
+  - [Viewing Package Details](#3-viewing-package-details)
+  - [Updating Package Status](#4-updating-package-status)
+  - [Removing a Package](#5-removing-a-package)
+  - [Search for a Package](#6-search-for-a-package)
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
 
-## Assumptions
+## Features
 
-- An **Employee** class was not created since the lab instructions did not specify anything about employees. However, it can be added if needed.
-- The application uses a simple **in-memory data store** for packages. In a real-world scenario, this would be replaced with a database.
-- The application includes **test data** that is loaded when the server starts. This data is stored in `testData.json`.
+- **Create a Package:** Add new packages with sender/receiver details, weight, and shipping method.
+- **View All Packages:** Display a list of all packages with details like tracking number, weight, and cost.
+- **View Package Details:** Access detailed information about a specific package, including a barcode.
+- **Update Package Status:** Change the status of a package (e.g., Created, In-Transit, Delivered).
+- **Remove a Package:** Delete a package from the system.
+- **Generate Barcodes:** Automatically generate barcodes for packages based on their tracking numbers.
 
----
+## Installation
 
-## Project Structure
+> [!NOTE]
+>
+> You will need [Node.js](https://nodejs.org/en/) (version 14 or later) and [npm](https://www.npmjs.com/) installed on your machine.
 
-```bash
-.
-├── data                                  # Data files
-│   └── testData.json                     # Test data for packages
-├── database-tables.sql                   # SQL for  database tables
-├── dist                                  # Compiled files
-│   └── server.js                         # Compiled server file
-├── package.json                          # Project configuration
-├── package-lock.json                     # Dependency lock file
-├── public                                # Static files
-│   └── styles.css                        # CSS styles
-├── README.md                             # Project documentation
-├── screenshots                           # Application screenshots
-│   ├── all-packages.png
-│   ├── homepage.png
-│   ├── new-pkg.png
-│   ├── pkg-details.png
-│   ├── remove-pkg-1.png
-│   └── remove-pkg-2.png
-├── src                                   # Source files
-│   ├── classes                           # TypeScript classes
-│   │   ├── OneDayPackage.ts              # OneDayPackage class
-│   │   ├── Package.ts                    # Abstract Package class
-│   │   ├── PostalSystem.ts               # Package management class
-│   │   └── TwoDayPackage.ts              # TwoDayPackage class
-│   ├── controllers                       # Route controllers
-│   │   ├── barcodeController.ts          # Barcode generator controller
-│   │   └── packageController.ts          # All package-related routes
-│   ├── enums.ts                          # Enumerator classes
-│   ├── middleware                        # Middleware functions
-│   │   ├── loadTestData.ts               # Load test data middleware
-│   │   ├── logger.ts                     # Request logger middleware
-│   │   └── validatePackage.ts            # Package data validation middleware
-│   ├── routes                            # Route definitions
-│   │   └── packageRoutes.ts              # All package-related routes
-│   ├── server.ts                         # Express server setup
-│   ├── singletons                        # Classes with single instances
-│   │   └── postalSystem.ts               # New instance of PostalSystem
-│   ├── utils                             # Helper functions
-│   │   ├── costCalculator.ts             # Shipping cost calculator
-│   │   ├── networkUtils.ts               # IP retrieval used in start message
-│   │   └── trackingNumberGenerator.ts    # Tracking number generator
-│   └── views                             # EJS page templates
-│       ├── 404.ejs                       # 404 error page
-│       ├── index.ejs                     # Home page
-│       ├── packages                      # All package-related views
-│       │   ├── confirmRemove.ejs         # Confirm package removal
-│       │   ├── details.ejs               # Package details page
-│       │   ├── list.ejs                  # List of all packages
-│       │   ├── new.ejs                   # Create a new package
-│       │   └── remove.ejs                # Remove a package
-│       └── partials                      # Reusable components
-│           ├── footer.ejs                # Footer code
-│           └── header.ejs                # Header code
-└── tsconfig.json                         # TypeScript configuration
-```
+### Steps
 
----
-
-## How to Use
-
-### Prerequisites
-
-- **Node.js** (version 14 or higher)
-- **npm** (version 6 or higher)
-
-### Installation
-
-1. **Clone the repository**:
+1. **Clone the Repository**
 
    ```bash
    git clone https://github.com/yourusername/postal-service-webapp.git
-   ```
-
-2. **Navigate to the project directory**:
-
-   ```bash
    cd postal-service-webapp
    ```
 
-### Running the Application
-
-1. **Install the dependencies**:
+2. **Install Dependencies**
 
    ```bash
    npm install
    ```
 
-2. **Build the project**:
+## Database Setup
+
+> [!NOTE]
+>
+> You will need the latest version of [PostgreSQL](https://www.postgresql.org/download/) installed on your machine.
+
+1. **Login as Administrator**
+
+   For Linux users:
+
+   ```bash
+   sudo -u postgres psql
+   ```
+
+   For macOS users:
+
+   ```bash
+   psql -U postgres
+   ```
+
+2. **Create a New Database**
+
+   ```sql
+   postgres=# CREATE DATABASE package_db;
+   ``
+
+3. **Create a Role (User) to Access the Database**
+
+   Login to the newly created database:
+
+   ```sql
+   postgres=# \c package_db
+   ```
+
+   Create the user role:
+
+   ```sql
+   package_db=# CREATE ROLE package_user WITH LOGIN PASSWORD '#password#';
+   ```
+
+4. **Grant Permissions to the User**
+
+   ```sql
+   package_db=# ALTER DATABASE package_db OWNER TO package_user;
+   package_db=# GRANT ALL PRIVILEGES ON DATABASE package_db TO package_user;
+   ```
+
+5. **Run the Schema to Create the Table**
+
+   Exit `psql` to return to the terminal command line:
+
+   ```sql
+   package_db=# \q
+   ```
+
+   Then, run the SQL script to create the necessary table:
+
+   ```bash
+   psql -d packages -f src/scripts/schema.sql
+   ```
+
+6. **Verify the Table Creation**
+
+   Login to the database again:
+
+   ```bash
+   psql -U package_user -d package_db -h localhost
+   ```
+
+   Check if the table was created successfully:
+
+   ```sql
+   package_db=# \dt
+   ```
+
+   You should see a table named `packages` in the list.
+
+> [!WARNING]
+>
+> The database setup creates a user with the name `package_user` and password `#password#`. These credentials will be used in the `.env` file to connect to the database. You can change the username and password as needed, but make sure to update the `.env` file accordingly.
+
+## Environment Variables
+
+This project uses environment variables to configure the database connection. A `.env.example` file is provided as a template.
+
+Copy the `.env.example` file to create a `.env` file:
+
+```bash
+cp .env.example .env
+```
+
+> [!WARNING]
+>
+> The provided `.env` file should be used for development purposes only. For production, consider using more secure credentials in your `.env` file. Ensure that you update the environment variables with your database credentials, if you opted to change them during the database setup.
+
+## Running the App
+
+1. **Build the Project**
 
    ```bash
    npm run build
    ```
 
-3. **Start the server**:
+2. **Start the Server**
 
    ```bash
    npm start
    ```
 
-4. **Navigate to link:**  
-    You can either click [here](http://localhost:3000) to open the application or click the `http://localhost:3000` link displayed in your terminal.
+3. **Access the App**
 
----
+   Open your browser and navigate to [http://localhost:3000](http://localhost:3000).
 
-## Development Mode
+> [!TIP]
+>
+> To run the app in development mode with live reloading:
+>
+> ```bash
+> npm run dev
+> ```
 
-To run the application in development mode with automatic reloading:
+## Project Structure
 
-```bash
-npm run dev
+The project implementation follows the Model-View-Controller (MVC) architecture. Below is a brief overview of the project structure:
+
+```markdown
+postal-service-webapp/
+├── .env.example            # Example environment variables file
+├── public/                 # Public assets (CSS, JS, images)
+├── src/
+│   ├── main.ts             # Main application file
+│   ├── config/             # Configuration file for database connection
+│   ├── controllers/        # Controllers that handle requests and responses
+│   ├── interfaces/         # TypeScript interfaces for type safety
+│   ├── middleware/         # Middleware functions for logging and error handling
+│   ├── models/             # Typescript class implementations of the models
+│   ├── routes/             # Route definition for packages
+│   ├── scripts/            # SQL script for database setup
+│   ├── singletons/         # Singleton class for single instance management
+│   ├── utils/              # Utility functions
+│   └── views/              # EJS templates for rendering views
+├── package.json            # Project metadata and dependencies
+├── package-lock.json       # Dependency lock file
+└── tsconfig.json           # TypeScript configuration file
 ```
 
-This will use `nodemon` (or similar) to watch for file changes and automatically restart the server.
+## Usage
 
----
+### 1. Adding a Package
 
-## Features
+- Click on the `Add New Package` button found either on the home page or All Packages page.
+- Fill in the form with sender/receiver details, weight, and shipping method.
+- Click `Create Package` to add the package.
 
-- **Create a Package**: Navigate to `/packages/new` to create a new package.
-- **View All Packages**: Navigate to `/packages` to view a list of all packages.
-- **View Package Details**: Click on a package's tracking number in the list to view its details.
-- **Update Package Status**: Update the status of a package from its details page.
-- **Remove a Package**: Navigate to `/packages/remove` to remove a package.
-- **Generate Barcode**: View the barcode for a package from its details page.
+### 2. Viewing All Packages
 
----
+- Click on the `All Packages` button on the home page.
+- A list of all packages will be displayed, including their tracking numbers, weights, and costs.
 
-## Database
+### 3. Viewing Package Details
 
-The project includes a SQL script (`database-tables.sql`) for creating the necessary database tables. This script is not currently used by the application but can be used to set up a database if needed.
+- Click on a package's tracking number to view its details.
+- The details page will show sender/receiver information, weight, shipping method, status, and a barcode.
 
----
+### 4. Updating Package Status
 
-## Test Data
+- From the package details page, select a new status and click `Update`.
+- The status will be updated in the database and reflected on the details page.
+- The status options include: `Created`, `In-Transit`, and `Delivered`.
 
-Test data is loaded from **`testData.json`** when the server starts. This data includes sample packages for testing purposes.
+### 5. Removing a Package
 
----
+- Click on the `Remove Package` button on the home page.
+- This will direct you to the Remove Package page where the tracking number of the package to be removed is required to locate it.
+- Enter the tracking number and click `Next`.
+- If the package is found, the package details are displayed and you will be prompted to either confirm or cancel the removal.
+- Click `Remove` to delete the package from the system and the database.
+- If the package is not found, an error message will be displayed.
 
-## Additional Notes
+### 6. Search for a Package
 
-- The application uses **EJS** for templating and **Express** for the server.
-- Middleware is used for **logging requests** and **validating package data**.
-- The **PostalSystem** class manages the packages and provides methods for adding, finding, and removing packages.
+- You can search for a package at any time by entering the tracking number in the search bar located in the navigation bar.
+- If the package is found, you will be redirected to the package details page.
+- If the package is not found, an error message will be displayed.
 
----
+## License
 
-## Future Enhancements
+This project is licensed under the [MIT License](LICENSE).
 
-- Add an **Employee** class and related functionality.
-- Integrate with a real database.
-- Add **user authentication** and **authorization**.
+## Acknowledgments
 
----
-
-## Acknowledgements
-
-- Thank you to Ms. Vernelle Sylvester for providing her expertise and guidance on Object Oriented Design and Programming.
-- Thank you to Mr. Dalwin Lewis for providing the necessary skills and knowledge on the tools and languages used in this project.
+- This project was developed as part of the **[CMPS2232] Object Oriented Programming** course at the [University of Belize](https://www.ub.edu.bz/).
+- Special thanks to Ms. Vernelle Sylvester and Mr. Dalwin Lewis for their guidance and support.
