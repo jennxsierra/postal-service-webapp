@@ -1,5 +1,5 @@
 -- Employees table
-CREATE TABLE employees (
+CREATE TABLE IF NOT EXISTS employees (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     username VARCHAR(50) NOT NULL UNIQUE,
@@ -9,7 +9,7 @@ CREATE TABLE employees (
 );
 
 -- Packages table
-CREATE TABLE packages (
+CREATE TABLE IF NOT EXISTS packages (
     tracking_number VARCHAR(20) PRIMARY KEY,
     sender_name VARCHAR(100) NOT NULL,
     sender_address VARCHAR(255) NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE packages (
 );
 
 -- Package history table to track status changes
-CREATE TABLE package_history (
+CREATE TABLE IF NOT EXISTS package_history (
     id SERIAL PRIMARY KEY,
     tracking_number VARCHAR(20) REFERENCES packages (tracking_number),
     status VARCHAR(20) NOT NULL CHECK (status IN ('Created', 'In-Transit', 'Delivered')),

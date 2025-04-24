@@ -11,12 +11,13 @@ export class TwoDayPackage extends Package implements ITwoDayPackage {
     receiverAddress: string,
     weight: number,
     costPerUnitWeight: number,
-    flatFee: number
+    flatFee: number,
+    status: PackageStatus
   ) {
     super(
       trackingNumber,
       ShippingMethod.TWO_DAY,
-      PackageStatus.CREATED,
+      status,
       senderName,
       senderAddress,
       receiverName,

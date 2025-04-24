@@ -11,12 +11,13 @@ export class OneDayPackage extends Package implements IOneDayPackage {
     receiverAddress: string,
     weight: number,
     costPerUnitWeight: number,
-    flatFee: number
+    flatFee: number,
+    status: PackageStatus
   ) {
     super(
       trackingNumber,
       ShippingMethod.ONE_DAY,
-      PackageStatus.CREATED,
+      status,
       senderName,
       senderAddress,
       receiverName,

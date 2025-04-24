@@ -1,29 +1,24 @@
 // src/server.ts
 import express from "express";
 import path from "path";
-import bodyParser from "body-parser";
 import packageRoutes from "./routes/packageRoutes";
 import logger from "./middleware/logger";
-import { loadTestData } from "./middleware/loadTestData";
 import { getLocalIPAddress } from "./utils/networkUtils";
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "..", "src", "views"));
-
-// Serve static files from public
-app.use(express.static(path.join(__dirname, "..", "public")));
-
-// Parse incoming form data
-app.use(bodyParser.urlencoded({ extended: true }));
 
 // Use the logger middleware
 app.use(logger);
 
-// Load test data middleware
-app.use(loadTestData);
+// Middleware to parse URL-encoded bodies
+app.use(express.urlencoded({ extended: true }));
+
+// Serve static files from public
+app.use(express.static(path.join(process.cwd(), "public")));
+
+// Set EJS as the templating engine and set the views directory
+app.set("view engine", "ejs");
+app.set("views", path.join(process.cwd(), "src/views"));
 
 // Basic home route
 app.get("/", (req, res) => {
@@ -39,6 +34,7 @@ app.use((req, res, next) => {
 });
 
 // Start the server
+const PORT = 3000;
 app.listen(PORT, () => {
   const ipAddress = getLocalIPAddress();
   console.log(`Server running on http://localhost:${PORT}`);

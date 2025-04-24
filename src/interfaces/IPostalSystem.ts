@@ -11,7 +11,7 @@ export interface IPostalSystem {
     weight: number,
     costPerUnitWeight: number,
     flatFee: number
-  ): IPackage;
+  ): Promise<IPackage>;
 
   addTwoDayPackage(
     trackingNumber: string,
@@ -22,10 +22,13 @@ export interface IPostalSystem {
     weight: number,
     costPerUnitWeight: number,
     flatFee: number
-  ): IPackage;
+  ): Promise<IPackage>;
 
-  findPackage(trackingNumber: string): IPackage | undefined;
-  getAllPackages(): IPackage[];
-  removePackage(trackingNumber: string): boolean;
-  updatePackageStatus(trackingNumber: string, newStatus: PackageStatus): boolean;
+  findPackage(trackingNumber: string): Promise<IPackage | undefined>;
+  getAllPackages(): Promise<IPackage[]>;
+  removePackage(trackingNumber: string): Promise<boolean>;
+  updatePackageStatus(
+    trackingNumber: string,
+    newStatus: PackageStatus
+  ): Promise<boolean>;
 }
