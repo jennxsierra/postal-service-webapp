@@ -35,7 +35,7 @@ router.get("/remove", showRemovePackageForm);
 router.post("/confirm-remove", confirmRemovePackage);
 
 // POST /packages/remove -> Remove a package
-router.post("/remove", removePackage);
+router.delete("/remove", removePackage);
 
 // GET /packages/:trackingNumber -> Show package details
 router.get("/:trackingNumber", getPackageDetails);

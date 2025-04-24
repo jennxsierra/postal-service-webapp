@@ -3,12 +3,16 @@ import express from "express";
 import path from "path";
 import packageRoutes from "./routes/packageRoutes";
 import logger from "./middleware/logger";
+import methodOverride from "method-override";
 import { getLocalIPAddress } from "./utils/networkUtils";
 
 const app = express();
 
 // Use the logger middleware
 app.use(logger);
+
+// Use method-override to support DELETE and PUT methods in forms
+app.use(methodOverride("_method"));
 
 // Middleware to parse URL-encoded bodies
 app.use(express.urlencoded({ extended: true }));
