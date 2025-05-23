@@ -33,7 +33,7 @@ app.use((req, res, next) => {
 });
 
 // Start the server
-const PORT = 3000;
+const PORT = 4000;
 app.listen(PORT, () => {
   const ipAddress = getLocalIPAddress();
   console.log(`Server running on http://localhost:${PORT}`);
